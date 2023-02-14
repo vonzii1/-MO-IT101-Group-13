@@ -1,0 +1,57 @@
+package motorPh;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class CalculateHoursWorked {
+
+	public static void main(String[] args) {
+		
+		String file = "src\\motorPH\\Attendance Record.csv";
+		BufferedReader reader = null;
+		String line = "", timeSplit[];
+		int startHour, startMin, endHour, endMin;
+		
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			while((line = reader.readLine()) != null) {
+				
+				String[] row = line.split(",");
+				
+				System.out.println("Employee Number: " + row[0]);
+				System.out.println("Last Name: " + row[1]);
+				System.out.println("First Name: " + row[2]);
+				System.out.println("Date: " + row[3]);
+				System.out.println("Time In: " + row[4]);
+				System.out.println("Time Out: " + row[5]);
+				
+				timeSplit = row[4].split(":");
+			    startHour = Integer.valueOf(timeSplit[0]);
+			    startMin = Integer.valueOf(timeSplit[1]);
+			    timeSplit = row[5].split(":");
+			    endHour = Integer.valueOf(timeSplit[0]);
+			    endMin = Integer.valueOf(timeSplit[1]);
+			    
+			    int workedMin = (endHour - startHour) * 60 + (endMin - startMin);
+			    int workedHour = workedMin / 60;
+			    workedMin = workedMin % 60;
+				
+			    System.out.println("Hours worked: " + workedHour + " hours and " + workedMin + " minutes");				
+				
+				
+				/*for (String index : row) {
+					System.out.printf("%-15s", index);
+				}*/
+				System.out.println("------------------------------");
+				
+				
+			}
+		}
+		
+		catch(Exception e) {
+			
+		}
+
+	}
+
+}

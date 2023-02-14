@@ -1,0 +1,62 @@
+package motorPh;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.NumberFormat;
+
+public class CalculateSalaryBasedonHoursWorked {
+
+	public static void main(String[] args) {
+		
+		String file = "src\\motorPH\\Employee Details.csv";
+		BufferedReader reader = null;
+		String line = "", timeSplit[];
+		int startHour, startMin, endHour, endMin;
+		
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			while((line = reader.readLine()) != null) {
+				
+				String[] row = line.split(",");
+				
+				System.out.println("Employee Number: " + row[0]);
+				System.out.println("Last Name: " + row[1]);
+				System.out.println("First Name: " + row[2]);
+				System.out.println("Date: " + row[3]);
+				System.out.println("Time In: " + row[4]);
+				System.out.println("Time Out: " + row[5]);
+				System.out.println("Hourly Rate: " + row[21]);
+				
+				float hourlyRate = Float.parseFloat(row[21]);
+				
+				timeSplit = row[4].split(":");
+			    startHour = Integer.valueOf(timeSplit[0]);
+			    startMin = Integer.valueOf(timeSplit[1]);
+			    timeSplit = row[5].split(":");
+			    endHour = Integer.valueOf(timeSplit[0]);
+			    endMin = Integer.valueOf(timeSplit[1]);
+			    
+			    int workedMin = (endHour - startHour) * 60 + (endMin - startMin);
+			    int workedHour = workedMin / 60;
+			    workedMin = workedMin % 60;
+			    
+			    NumberFormat formatter = NumberFormat.getInstance();
+			    String formattedNumber = formatter.format(workedHour * hourlyRate);
+			    
+			    System.out.println("Hours worked: " + workedHour + " hours and " + workedMin + " minutes");				
+				
+			    System.out.println("Daily Salary: ₱" + formattedNumber );				
+			    
+				System.out.println("------------------------------");
+				
+			
+			}
+		}
+		
+		catch(Exception e) {
+			
+		}
+
+	}
+
+}
